@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board List</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <style>
+        /* 목록 페이지의 스타일 */
+        .list-container {
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .table th, .table td {
+            padding: 10px;
+            border-bottom: 1px solid #CCCCCC;
+        }
+
+        .table th {
+            background-color: #f4f4f4;
+            text-align: left;
+        }
+
+        .table td {
+            background-color: #FFFFFF;
+        }
+
+        .table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .table td:last-child {
+            text-align: center;
+        }
+
+        .pagination-search-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .pagination-container {
+            display: flex;
+        }
+
+        .pagination-link {
+            margin-right: 5px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .search-container {
+            flex-grow: 1;
+            margin-left: 20px;
+        }
+
+        .search-input {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+
+        .search-button {
+            padding: 8px 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background-color: #555;
+        }
+
+        #date {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div th:include="Parts/header"></div>
+<h1>Board List</h1>
+<div class="list-container">
+    <div class="table-container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Writer</th>
+                <th>Write Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post : ${page.content}" th:onclick="|window.location.href='@{'/'+${post.idx}}'|">
+                <td th:text="${post.title}" >Title</td>
+                <td th:text="${post.writer}"  >Writer</td>
+                <td th:text="${post.writeTime}" id="date"  >Write Time</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 페이지 번호를 출력합니다 -->
+<div class="pagination-search-container">
+    <div class="pagination-container">
+        <span>Pages:</span>
+        <span th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+            <a th:href="@{/(pageNumber=${i}, search=${search})}" th:text="${i+1}" class="pagination-link"></a>
+        </span>
+    </div>
+    <div class="search-container">
+        <form th:action="@{/}" method="get">
+            <input type="text" name="search" placeholder="Search..." class="search-input">
+            <button type="submit" class="search-button">Search</button>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시물 상세 보기</title>
+    <link rel="stylesheet" href="/CSS/style.css">
+    <style>
+        /* 상세 페이지의 스타일 */
+        .container {
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+        }
+
+        .detail-section {
+            margin-bottom: 20px;
+        }
+
+        .detail-section h2 {
+            color: #333;
+        }
+
+        .detail-section p {
+            margin: 10px 0;
+        }
+
+        .button-group {
+            text-align: right;
+        }
+
+        .button-group .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-left: 10px;
+            background-color: #333;
+            color: #FFF;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .button-group .btn:hover {
+            background-color: #555;
+        }
+
+    </style>
+</head>
+<body>
+<div th:include="Parts/header"></div>
+<div class="container">
+    <h1>Detail view</h1>
+    <table class="detail-table">
+        <tr>
+            <th>title</th>
+            <td th:text="${board.title}">title</td>
+        </tr>
+        <tr>
+            <th>writer</th>
+            <td><span th:text="${board.writer}">write</span></td>
+        </tr>
+        <tr>
+            <th>content</th>
+            <td><span th:text="${board.content}">content</span></td>
+        </tr>
+        <tr>
+            <th>wrote time</th>
+            <td><span th:text="${board.writeTime}">wrote time</span></td>
+        </tr>
+    </table>
+    <div class="button-group">
+        <a th:href="@{'/'+update+'/'+${board.idx}}" class="btn">edit</a>
+        <a th:href="@{'/'+delete+'/'+${board.idx}}" class="btn">delete</a>
+        <a th:href="@{/}" class="btn">to list</a>
+    </div>
+</div>
+</body>
+</html>
